@@ -1,0 +1,29 @@
+/* ==UserStyle==
+@name         WhatsApp Web tweaks
+@namespace    kriskhaira
+@version      1.2.0
+@description  Removes a stray border; hides Collapsible Sidebars' carets over pop-ups
+@homepageURL  https://github.com/kriskhaira/userstyles
+@updateURL    https://raw.githubusercontent.com/kriskhaira/userstyles/main/whatsapp-web.user.css
+==/UserStyle== */
+/* Stylus checks @updateURL for updates. Bump @version on every edit, or Stylus keeps the old copy. */
+@-moz-document url-prefix("https://web.whatsapp.com/") {
+  /* Removes the stray vertical line left where the chat list ended once Collapsible Sidebars narrowed it.
+     Rule copied from the "Small unnecessary borders" block in WhatsApp Web – Clean UI v2.6.1. */
+  #app > div > div > div:nth-last-child(2) > div > div:nth-child(3) > div:first-child,
+  #app > div > div > div:nth-last-child(2) > div > div:nth-child(3) > div:last-child,
+  #app > div > div > div:nth-last-child(2) > div > div:nth-child(4) > div,
+  #app > div > div > div:nth-last-child(2) > div > div:nth-child(5),
+  #app > div > div > div:nth-last-child(2) > div > div:nth-child(6),
+  #app > div > div > div:nth-last-child(2) > div > div:nth-child(7) {
+    border-left: 0 !important;
+  }
+
+  /* Collapsible Sidebars puts its two caret buttons on <body> at z-index 100000, so they float over the
+     video viewer and other overlays (2026-10-21). WhatsApp mounts overlays into the empty <span> slots
+     inside .app-wrapper-web, the same z-index-100 layer as the rest of the app, so no z-index value fixes it:
+     hide the carets while any slot holds an overlay. */
+  body:has(.app-wrapper-web > span:not(:empty)) :is(#whc-rail-toggle, #whc-chatlist-toggle) {
+    visibility: hidden !important;
+  }
+}
