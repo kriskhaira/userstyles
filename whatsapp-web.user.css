@@ -1,8 +1,8 @@
 /* ==UserStyle==
 @name         WhatsApp Web tweaks
 @namespace    kriskhaira
-@version      1.2.0
-@description  Removes a stray border; hides Collapsible Sidebars' carets over pop-ups
+@version      1.3.0
+@description  Wider message bubbles; removes a stray border; hides Collapsible Sidebars' carets over pop-ups
 @homepageURL  https://github.com/kriskhaira/userstyles
 @updateURL    https://raw.githubusercontent.com/kriskhaira/userstyles/main/whatsapp-web.user.css
 ==/UserStyle== */
@@ -25,5 +25,12 @@
      hide the carets while any slot holds an overlay. */
   body:has(.app-wrapper-web > span:not(:empty)) :is(#whc-rail-toggle, #whc-chatlist-toggle) {
     visibility: hidden !important;
+  }
+
+  /* Message bubbles: WhatsApp caps them at 65% of the chat pane, which wastes a wide window (2026-10-25).
+     ~90% on a narrow pane easing to 80% on a wide one: 90% wins below 800px, 720px between, 80% above 900px.
+     The class .message-in/.message-out is gone; the bubble row is data-testid="msg-container". */
+  #main [data-testid="msg-container"] {
+    max-width: min(90%, max(80%, 720px)) !important;
   }
 }
